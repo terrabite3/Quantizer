@@ -345,8 +345,8 @@ void loop()
   else
   {
     // On rising edge of trigger, or if trigger isn't connected, update CV
-    if ((trig == 1 && lastTrig != 1) || 
-        trig == -1)
+//    if ((trig == 1 && lastTrig != 1) || 
+//        trig == -1)
     {
       int note = quantize(cv);
       setLed(note % 12 + 1);
@@ -368,7 +368,7 @@ void loop()
       lastNote = note;
     }
 
-    if (currentPitch != targetPitch)
+//    if (currentPitch != targetPitch)
     {
       // If the slew knob is all the way down (or close enough),
       // jump straight to the desired pitch.
