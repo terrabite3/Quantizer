@@ -1,3 +1,5 @@
+#include "digitalWriteFast.h"
+
 #define SLEW_PIN A0
 #define TRANSPOSE_PIN A1
 #define LED0_PIN A2
@@ -22,7 +24,7 @@
 
 #define LOW_DAC_GAIN
 
-
+ 
 int activeSwitches = 0b111111111111;
 
 void setupSwitchPins()
@@ -31,10 +33,10 @@ void setupSwitchPins()
   pinMode(COL2_PIN, OUTPUT);
   pinMode(COL3_PIN, OUTPUT);
   pinMode(COL4_PIN, OUTPUT);
-  digitalWrite(COL1_PIN, HIGH);
-  digitalWrite(COL2_PIN, HIGH);
-  digitalWrite(COL3_PIN, HIGH);
-  digitalWrite(COL4_PIN, HIGH);
+  digitalWriteFast(COL1_PIN, HIGH);
+  digitalWriteFast(COL2_PIN, HIGH);
+  digitalWriteFast(COL3_PIN, HIGH);
+  digitalWriteFast(COL4_PIN, HIGH);
   pinMode(ROW1_PIN, INPUT_PULLUP);
   pinMode(ROW2_PIN, INPUT_PULLUP);
   pinMode(ROW3_PIN, INPUT_PULLUP);
@@ -43,30 +45,30 @@ void setupSwitchPins()
 void readSwitches()
 {
   activeSwitches = 0;
-  
-  digitalWrite(COL1_PIN, LOW);
+
+  digitalWriteFast(COL1_PIN, LOW);
   activeSwitches |= (digitalRead(ROW1_PIN) & 1) << 0;
   activeSwitches |= (digitalRead(ROW2_PIN) & 1) << 1;
   activeSwitches |= (digitalRead(ROW3_PIN) & 1) << 2;
-  digitalWrite(COL1_PIN, HIGH);
+  digitalWriteFast(COL1_PIN, HIGH);
   
-  digitalWrite(COL2_PIN, LOW);
+  digitalWriteFast(COL2_PIN, LOW);
   activeSwitches |= (digitalRead(ROW1_PIN) & 1) << 3;
   activeSwitches |= (digitalRead(ROW2_PIN) & 1) << 4;
   activeSwitches |= (digitalRead(ROW3_PIN) & 1) << 5;
-  digitalWrite(COL2_PIN, HIGH);
+  digitalWriteFast(COL2_PIN, HIGH);
   
-  digitalWrite(COL3_PIN, LOW);
+  digitalWriteFast(COL3_PIN, LOW);
   activeSwitches |= (digitalRead(ROW1_PIN) & 1) << 6;
   activeSwitches |= (digitalRead(ROW2_PIN) & 1) << 7;
   activeSwitches |= (digitalRead(ROW3_PIN) & 1) << 8;
-  digitalWrite(COL3_PIN, HIGH);
+  digitalWriteFast(COL3_PIN, HIGH);
   
-  digitalWrite(COL4_PIN, LOW);
+  digitalWriteFast(COL4_PIN, LOW);
   activeSwitches |= (digitalRead(ROW1_PIN) & 1) << 9;
   activeSwitches |= (digitalRead(ROW2_PIN) & 1) << 10;
   activeSwitches |= (digitalRead(ROW3_PIN) & 1) << 11;
-  digitalWrite(COL4_PIN, HIGH);
+  digitalWriteFast(COL4_PIN, HIGH);
 
   activeSwitches ^= 0b111111111111;
 }
@@ -85,74 +87,74 @@ void setLed(int index)
     case 1:
       pinMode(LED0_PIN, OUTPUT);
       pinMode(LED1_PIN, OUTPUT);
-      digitalWrite(LED0_PIN, HIGH);
-      digitalWrite(LED1_PIN, LOW);
+      digitalWriteFast(LED0_PIN, HIGH);
+      digitalWriteFast(LED1_PIN, LOW);
       break;
     case 2:
       pinMode(LED0_PIN, OUTPUT);
       pinMode(LED1_PIN, OUTPUT);
-      digitalWrite(LED0_PIN, LOW);
-      digitalWrite(LED1_PIN, HIGH);
+      digitalWriteFast(LED0_PIN, LOW);
+      digitalWriteFast(LED1_PIN, HIGH);
       break;
     case 3:
       pinMode(LED0_PIN, OUTPUT);
       pinMode(LED2_PIN, OUTPUT);
-      digitalWrite(LED0_PIN, HIGH);
-      digitalWrite(LED2_PIN, LOW);
+      digitalWriteFast(LED0_PIN, HIGH);
+      digitalWriteFast(LED2_PIN, LOW);
       break;
     case 4:
       pinMode(LED0_PIN, OUTPUT);
       pinMode(LED2_PIN, OUTPUT);
-      digitalWrite(LED0_PIN, LOW);
-      digitalWrite(LED2_PIN, HIGH);
+      digitalWriteFast(LED0_PIN, LOW);
+      digitalWriteFast(LED2_PIN, HIGH);
       break;
     case 5:
       pinMode(LED0_PIN, OUTPUT);
       pinMode(LED3_PIN, OUTPUT);
-      digitalWrite(LED0_PIN, HIGH);
-      digitalWrite(LED3_PIN, LOW);
+      digitalWriteFast(LED0_PIN, HIGH);
+      digitalWriteFast(LED3_PIN, LOW);
       break;
     case 6:
       pinMode(LED0_PIN, OUTPUT);
       pinMode(LED3_PIN, OUTPUT);
-      digitalWrite(LED0_PIN, LOW);
-      digitalWrite(LED3_PIN, HIGH);
+      digitalWriteFast(LED0_PIN, LOW);
+      digitalWriteFast(LED3_PIN, HIGH);
       break;
     case 7:
       pinMode(LED1_PIN, OUTPUT);
       pinMode(LED2_PIN, OUTPUT);
-      digitalWrite(LED1_PIN, HIGH);
-      digitalWrite(LED2_PIN, LOW);
+      digitalWriteFast(LED1_PIN, HIGH);
+      digitalWriteFast(LED2_PIN, LOW);
       break;
     case 8:
       pinMode(LED1_PIN, OUTPUT);
       pinMode(LED2_PIN, OUTPUT);
-      digitalWrite(LED1_PIN, LOW);
-      digitalWrite(LED2_PIN, HIGH);
+      digitalWriteFast(LED1_PIN, LOW);
+      digitalWriteFast(LED2_PIN, HIGH);
       break;
     case 9:
       pinMode(LED1_PIN, OUTPUT);
       pinMode(LED3_PIN, OUTPUT);
-      digitalWrite(LED1_PIN, HIGH);
-      digitalWrite(LED3_PIN, LOW);
+      digitalWriteFast(LED1_PIN, HIGH);
+      digitalWriteFast(LED3_PIN, LOW);
       break;
     case 10:
       pinMode(LED1_PIN, OUTPUT);
       pinMode(LED3_PIN, OUTPUT);
-      digitalWrite(LED1_PIN, LOW);
-      digitalWrite(LED3_PIN, HIGH);
+      digitalWriteFast(LED1_PIN, LOW);
+      digitalWriteFast(LED3_PIN, HIGH);
       break;
     case 11:
       pinMode(LED2_PIN, OUTPUT);
       pinMode(LED3_PIN, OUTPUT);
-      digitalWrite(LED2_PIN, HIGH);
-      digitalWrite(LED3_PIN, LOW);
+      digitalWriteFast(LED2_PIN, HIGH);
+      digitalWriteFast(LED3_PIN, LOW);
       break;
     case 12:
       pinMode(LED2_PIN, OUTPUT);
       pinMode(LED3_PIN, OUTPUT);
-      digitalWrite(LED2_PIN, LOW);
-      digitalWrite(LED3_PIN, HIGH);
+      digitalWriteFast(LED2_PIN, LOW);
+      digitalWriteFast(LED3_PIN, HIGH);
       break;
   }
 }
@@ -204,7 +206,7 @@ void writeDac(int value)
 
 //  digitalWrite(CS_PIN, HIGH);
 //  delay(1);
-  digitalWrite(CS_PIN, LOW);
+  digitalWriteFast(CS_PIN, LOW);
 //  digitalWrite(SCK_PIN, LOW);
 
 //  for (int i = 15; i >= 0; --i)
@@ -217,11 +219,11 @@ void writeDac(int value)
   
   shiftOut(SDI_PIN, SCK_PIN, MSBFIRST, (value >> 8) & 0xFF);
   shiftOut(SDI_PIN, SCK_PIN, MSBFIRST, value & 0xFF);
-  digitalWrite(CS_PIN, HIGH);
+  digitalWriteFast(CS_PIN, HIGH);
 
-  digitalWrite(GATE_PIN, LOW);
+  digitalWriteFast(GATE_PIN, LOW);
 //  delay(1);
-  digitalWrite(GATE_PIN, HIGH);
+  digitalWriteFast(GATE_PIN, HIGH);
 }
 
 //bool trigSenseHigh = true;
@@ -297,6 +299,7 @@ long currentPitch = 0;
 
 void loop()
 {
+
 ////  pinMode(TRIG_SENSE_PIN, INPUT);
 ////  delay(1);
 ////  digitalWrite(GATE_PIN, digitalRead(TRIG_IN_PIN));
@@ -334,13 +337,13 @@ void loop()
 //  Serial.print("Input: ");
 //  Serial.print(pot);
 //  Serial.print("\t");
-
+  
   if (activeSwitches == 0)
   {
     setLed(0);
     lastNote = -1;
     writeDac(0);
-    digitalWrite(GATE_PIN, LOW);
+    digitalWriteFast(GATE_PIN, LOW);
   }
   else
   {
@@ -405,11 +408,11 @@ void loop()
     // If the trigger is high or isn't connected, assert the gate output
     if (trig == 1 || trig == -1)
     {
-      digitalWrite(GATE_PIN, HIGH);
+      digitalWriteFast(GATE_PIN, HIGH);
     }
     else
     {
-      digitalWrite(GATE_PIN, LOW);
+      digitalWriteFast(GATE_PIN, LOW);
     }
 
     
