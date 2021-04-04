@@ -47,27 +47,27 @@ void readSwitches()
   activeSwitches = 0;
 
   digitalWriteFast(COL1_PIN, LOW);
-  activeSwitches |= (digitalRead(ROW1_PIN) & 1) << 0;
-  activeSwitches |= (digitalRead(ROW2_PIN) & 1) << 1;
-  activeSwitches |= (digitalRead(ROW3_PIN) & 1) << 2;
+  delayMicroseconds(2);
+  activeSwitches |= ((PIND >> 2) & 0b11) ;
+  activeSwitches |= (PINB & 0b10) << (1 + 0);
   digitalWriteFast(COL1_PIN, HIGH);
   
   digitalWriteFast(COL2_PIN, LOW);
-  activeSwitches |= (digitalRead(ROW1_PIN) & 1) << 3;
-  activeSwitches |= (digitalRead(ROW2_PIN) & 1) << 4;
-  activeSwitches |= (digitalRead(ROW3_PIN) & 1) << 5;
+  delayMicroseconds(2);
+  activeSwitches |= (PIND & 0b1100) << (-2 + 3);
+  activeSwitches |= (PINB & 0b10) << (1 + 3);
   digitalWriteFast(COL2_PIN, HIGH);
   
   digitalWriteFast(COL3_PIN, LOW);
-  activeSwitches |= (digitalRead(ROW1_PIN) & 1) << 6;
-  activeSwitches |= (digitalRead(ROW2_PIN) & 1) << 7;
-  activeSwitches |= (digitalRead(ROW3_PIN) & 1) << 8;
+  delayMicroseconds(2);
+  activeSwitches |= (PIND & 0b1100) << (-2 + 6);
+  activeSwitches |= (PINB & 0b10) << (1 + 6);
   digitalWriteFast(COL3_PIN, HIGH);
   
   digitalWriteFast(COL4_PIN, LOW);
-  activeSwitches |= (digitalRead(ROW1_PIN) & 1) << 9;
-  activeSwitches |= (digitalRead(ROW2_PIN) & 1) << 10;
-  activeSwitches |= (digitalRead(ROW3_PIN) & 1) << 11;
+  delayMicroseconds(2);
+  activeSwitches |= (PIND & 0b1100) << (-2 + 9);
+  activeSwitches |= (PINB & 0b10) << (1 + 9);
   digitalWriteFast(COL4_PIN, HIGH);
 
   activeSwitches ^= 0b111111111111;
@@ -240,7 +240,7 @@ bool isTrigConnected()
   {
     delay(1);
     
-    bool trig = digitalRead(TRIG_IN_PIN);
+    bool trig = (PORTC >> 3) & 1;
     bool expectedTrig = !trigSensePullup;
     // If trigger pullup is disabled, we expect trigger in to be high
     if (trig != expectedTrig)
@@ -268,7 +268,7 @@ int readTrigger()
 {
   if (!isTrigConnected()) return -1;
   // Invert
-  if (digitalRead(TRIG_IN_PIN)) return 0;
+  if ((PORTC >> 3) & 1) return 0;
   return 1;
 }
 

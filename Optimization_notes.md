@@ -20,7 +20,13 @@ There's still a little bit of jitter, about 10 us.
 
 ### digitalWriteFast
 
-Port IO is known to be slow on Arduino. I switched to digitalWriteFast() and saved about 6 ms. I also tried pinModeFast(), but that gave some odd results and only saved 3 ms.
+Port IO is known to be slow on Arduino. I switched to digitalWriteFast() and saved about 60 us. I also tried pinModeFast(), but that gave some odd results and only saved 30 us.
+
+### digitalRead port access
+
+digitalRead is also slow. I switched to reading the port directly. This saved 120 us. I don't know why the 10V in isn't showing any time saved.
+
+I needed to add a 2 us delay after setting the column pin before checking the row pin. Otherwise there wasn't enough time for the signal to propagate. Now that's fast!
 
 ## Results
 
@@ -28,4 +34,4 @@ Port IO is known to be slow on Arduino. I switched to digitalWriteFast() and sav
 | ----------------- | ----- | ------ |
 | Baseline          |  1.81 |   2.98 |
 | digitalWriteFast  |  1.75 |   2.86 |
-
+| digtialRead port  |  1.62 |   2.86 |
