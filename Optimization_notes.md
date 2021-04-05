@@ -36,6 +36,10 @@ Then I tried adding a check at the outer loop to see if it was even in the right
 
 Then I changed the note variable to be 8 bits instead of 16. This cut the quantization time in about half.
 
+### SPI
+
+The SPI peripheral is faster than shiftOut(). Since I'm already using the SS pin for one of the columns, I need to use SPI.begin() and SPI.end() before and after each transfer.
+
 ## Results
 
 | Change            | 0V in | 10V in |
@@ -44,3 +48,4 @@ Then I changed the note variable to be 8 bits instead of 16. This cut the quanti
 | digitalWriteFast  |  1.75 |   2.86 |
 | digitalRead port  |  1.62 |   2.86 |
 | Quantization      |  1.63 |   1.73 |
+| SPI               |  1.45 |   1.57 |

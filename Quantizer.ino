@@ -1,4 +1,5 @@
 #include "digitalWriteFast.h"
+#include <SPI.h>
 
 #define SLEW_PIN A0
 #define TRANSPOSE_PIN A1
@@ -221,8 +222,10 @@ void writeDac(int value)
 //  }
 
   
-  shiftOut(SDI_PIN, SCK_PIN, MSBFIRST, (value >> 8) & 0xFF);
-  shiftOut(SDI_PIN, SCK_PIN, MSBFIRST, value & 0xFF);
+  SPI.begin();
+  SPI.transfer16(value);
+  SPI.end();
+
   digitalWriteFast(CS_PIN, HIGH);
 
   digitalWriteFast(GATE_PIN, LOW);
@@ -290,6 +293,7 @@ void setup()
   pinMode(TRIG_SENSE_PIN, INPUT);
   pinMode(TRIG_IN_PIN, INPUT);
 
+  SPI.beginTransaction(SPISettings(16000000, MSBFIRST, SPI_MODE0));
 //  Serial.begin(9600);
 //  Serial.println("Hello");
 }
