@@ -28,10 +28,19 @@ digitalRead is also slow. I switched to reading the port directly. This saved 12
 
 I needed to add a 2 us delay after setting the column pin before checking the row pin. Otherwise there wasn't enough time for the signal to propagate. Now that's fast!
 
+### Quantization optimization
+
+I tried replacing the multiplication with bitshifts, but it didn't make any difference. I think the compiler is already doing that.
+
+Then I tried adding a check at the outer loop to see if it was even in the right octave. This makes sure the inner loop only runs once. Now the quantization doesn't really take any longer for higher octaves. The quantization time varies by about 200 us.
+
+Then I changed the note variable to be 8 bits instead of 16. This cut the quantization time in about half.
+
 ## Results
 
 | Change            | 0V in | 10V in |
 | ----------------- | ----- | ------ |
 | Baseline          |  1.81 |   2.98 |
 | digitalWriteFast  |  1.75 |   2.86 |
-| digtialRead port  |  1.62 |   2.86 |
+| digitalRead port  |  1.62 |   2.86 |
+| Quantization      |  1.63 |   1.73 |

@@ -171,7 +171,11 @@ int quantize(int cvIn)
 {
   for (int octave = 0; octave < 10; ++octave)
   {
-    for (int note = 0; note < 12; ++note)
+    // Don't bother checking each note if the ADC value is above the end of this octave
+    int adcValueForNextOctave = (octave + 1) * 100;
+    if (adcValueForNextOctave < cvIn) continue;
+
+    for (byte note = 0; note < 12; ++note)
     {
       int adcValueForThisNote = (octave * 100) + (note * 8) + (note / 3);
       if ((activeSwitches >> note) & 1)
