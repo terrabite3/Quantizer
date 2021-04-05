@@ -298,8 +298,8 @@ int lastNote;
 int lastTrig = -1;
 
 #define PITCH_EXTRA_BITS 2
-long targetPitch = 0;
-long currentPitch = 0;
+int targetPitch = 0;
+int currentPitch = 0;
 
 void loop()
 {
@@ -361,9 +361,9 @@ void loop()
 
       
 #ifdef LOW_DAC_GAIN
-      targetPitch = note << (long(2) + PITCH_EXTRA_BITS);
+      targetPitch = note << (2 + PITCH_EXTRA_BITS);
 #else
-      targetPitch = note << (long(1) + PITCH_EXTRA_BITS);
+      targetPitch = note << (1 + PITCH_EXTRA_BITS);
 #endif
   
 
